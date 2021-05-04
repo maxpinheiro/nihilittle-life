@@ -1,0 +1,32 @@
+{
+  "GRADE_SCHOOL": {
+    "points": 3,
+    "prompt": "Choose what to do during recess:",
+    "choices": [
+      {
+        "type": "athlete",
+        "decision": "Play soccer on the field"
+      },
+      {
+        "type": "artist",
+        "decision": "Draw with chalk on the ground"
+      },
+      {
+        "type": "programmer",
+        "decision": "Play games on your calculator"
+      },
+      {
+        "type": "politician",
+        "decision": "Tell a story to the other kids"
+      },
+      {
+        "type": "scientist",
+        "decision": "Explore the anthill on the sidewalk"
+      },
+      {
+        "type": "writer",
+        "decision": "Read your book"
+      }
+    ]
+  }
+}
