@@ -28,5 +28,38 @@
         "decision": "Read your book"
       }
     ]
+  },
+
+
+  "HIGH_SCHOOL1" : {
+    "points": 1,
+    "prompt": "Build Your Schedule:",
+    "choices" : [
+      {
+        "type": "athlete",
+        "decision": "Gym"
+      },
+      {
+        "type": "artist",
+        "decision": "Studio Art"
+      },
+      {
+        "type": "programmer",
+        "decision": "Web Design"
+      },
+      {
+        "type": "politician",
+        "decision": "Debate"
+      },
+      {
+        "type": "scientist",
+        "decision": "Chemistry"
+      },
+      {
+        "type": "writer",
+        "decision": "Creative writing"
+      }
+    ]
   }
+
 }
