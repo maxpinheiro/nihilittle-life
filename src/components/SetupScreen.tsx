@@ -12,7 +12,7 @@ const Character: React.FC<CharacterProps> = ({
  }) => {
     return (
         <div onClick={setPlayerIdx} style={{backgroundColor: 'gray', border: selected ? 'solid 2px red' : ''}}>
-            <img src={`/nihilittle-life/media/players${idx+1}_intro.png`} alt="" />
+            <img src={`/nihilittle-life/media/players/${idx+1}_intro.png`} alt="" />
         </div>
     )
 }

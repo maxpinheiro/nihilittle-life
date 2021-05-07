@@ -29,37 +29,66 @@
       }
     ]
   },
-
-
-  "HIGH_SCHOOL1" : {
-    "points": 1,
-    "prompt": "Build Your Schedule:",
-    "choices" : [
-      {
-        "type": "athlete",
-        "decision": "Gym"
-      },
-      {
-        "type": "artist",
-        "decision": "Studio Art"
-      },
-      {
-        "type": "programmer",
-        "decision": "Web Design"
-      },
-      {
-        "type": "politician",
-        "decision": "Debate"
-      },
-      {
-        "type": "scientist",
-        "decision": "Chemistry"
-      },
-      {
-        "type": "writer",
-        "decision": "Creative writing"
-      }
-    ]
-  }
-
+  "HIGH_SCHOOL": [
+    {
+      "points": 1,
+      "prompt": "Build Your Schedule (choose 3 classes):",
+      "choices": [
+        {
+          "type": "athlete",
+          "decision": "Gym"
+        },
+        {
+          "type": "artist",
+          "decision": "Studio Art"
+        },
+        {
+          "type": "programmer",
+          "decision": "Web Design"
+        },
+        {
+          "type": "politician",
+          "decision": "Debate"
+        },
+        {
+          "type": "scientist",
+          "decision": "Chemistry"
+        },
+        {
+          "type": "writer",
+          "decision": "Creative writing"
+        }
+      ]
+    },
+    {
+      "points": 2,
+      "prompt": "Choose your extracurricular",
+      "choices": [
+        {
+          "type": "athlete",
+          "decision": "Join the basketball team!"
+        },
+        {
+          "type": "artist",
+          "decision": "Join the Photography Club!"
+        },
+        {
+          "type": "programmer",
+          "decision": "Join the robotics team!"
+        },
+        {
+          "type": "politician",
+          "decision": "Run for student body president!"
+        },
+        {
+          "type": "scientist",
+          "decision": "Join the science olympiads!"
+        },
+        {
+          "type": "writer",
+          "decision": "Write for the student magazine!"
+        }
+      ]
+    }
+  ]
 }
