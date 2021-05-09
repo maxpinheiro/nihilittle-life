@@ -8,12 +8,10 @@ import GradeSchoolScreen from "./components/GradeSchoolScreen";
 import HighSchoolScreen from "./components/HighSchoolScreen";
 
 enum stage {INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER, LOVE, CAREER2, RETIREMENT, END_SCENE};
-
-
-
+type age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
 type State = {
   gameStage: stage,
-  player: { idx: number, name: string, age: 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old' }
+  player: { idx: number, name: string, age: age }
   personalityScore: PersonalityScores,
   pet: number
 }
@@ -44,6 +42,7 @@ export default class App extends React.Component<any, State> {
     this.setScene = this.setScene.bind(this);
     this.setPetIdx = this.setPetIdx.bind(this);
     this.setPlayerIdx = this.setPlayerIdx.bind(this);
+    this.setPlayerName = this.setPlayerName.bind(this);
     this.addPersonalityScore = this.addPersonalityScore.bind(this);
   }
 
@@ -52,6 +51,7 @@ export default class App extends React.Component<any, State> {
   }
 
   render() {
+    console.log(this.state);
     return (
         <div>
           { this.getScene() }
@@ -64,7 +64,10 @@ export default class App extends React.Component<any, State> {
       case stage.INTRO:
         return <IntroScreen advance={() => this.setScene(stage.SETUP)} />
       case stage.SETUP:
-        return <SetupScreen playerIdx={this.state.player.idx} setPlayerIdx={this.setPlayerIdx} advance={() => this.setScene(stage.GRADE_SCHOOL)} />
+        return <SetupScreen advance={() => this.setScene(stage.GRADE_SCHOOL)}
+                            playerIdx={this.state.player.idx}
+                            setPlayerIdx={this.setPlayerIdx}
+                            setPlayerName={this.setPlayerName} />
       case stage.GRADE_SCHOOL:
         return <GradeSchoolScreen advance={() => this.setScene(stage.HIGH_SCHOOL)}
                                   addPersonalityScore={this.addPersonalityScore}
@@ -73,8 +76,8 @@ export default class App extends React.Component<any, State> {
                                   // @ts-ignore
                                   decision={Decisions["GRADE_SCHOOL"]} />
       case stage.HIGH_SCHOOL:
-        return <HighSchoolScreen  addPersonalityScore={this.addPersonalityScore}
-                                  advance={() => this.setScene(stage.COLLEGE)}
+        return <HighSchoolScreen  advance={() => this.setScene(stage.COLLEGE)}
+                                  addPersonalityScore={this.addPersonalityScore}
                                   // @ts-ignore
                                   decisions={Decisions["HIGH_SCHOOL"]}/>
       default:
@@ -84,10 +87,16 @@ export default class App extends React.Component<any, State> {
 
   setScene(scene: stage) {
     this.setState(prevState => ({...prevState, gameStage: scene}));
+    const ages: {[scene: number] : age} = {3: "adolescent", 4: "young_adult", 6: "adult", 8: "old"};
+    if (scene in ages) this.setState(prevState => ({...prevState, player: {...prevState.player, age: ages[scene]}}));
   }
 
   setPlayerIdx(idx: number) {
     this.setState(prevState => ({...prevState, player: {...prevState.player, idx}}));
+  }
+
+  setPlayerName(name: string) {
+    this.setState(prevState => ({...prevState, player: {...prevState.player, name}}));
   }
 
   setPetIdx (pet: number) {

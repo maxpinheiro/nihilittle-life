@@ -17,17 +17,22 @@ const Character: React.FC<CharacterProps> = ({
     )
 }
 
+enum Stage {CHARACTER, NAME};
+
 type SetupScreenProps = {
     playerIdx: number,
     setPlayerIdx: (idx: number) => void,
+    setPlayerName: (name: string) => void,
     advance: () => void
 }
 const SetupScreen: React.FC<SetupScreenProps> = ({
     playerIdx,
     setPlayerIdx,
+    setPlayerName,
     advance
 }) => {
     const [selected, setSelected] = useState<boolean>(false);
+    const [stage, setStage] = useState<Stage>(Stage.CHARACTER);
 
     return (
         <div>
@@ -36,12 +41,21 @@ const SetupScreen: React.FC<SetupScreenProps> = ({
                     <Character
                         setPlayerIdx={() => {
                             setPlayerIdx(idx);
-                            setSelected(true);
+                            setStage(Stage.NAME);
                         }}
                         idx={idx} selected={playerIdx === idx}
                     />
                 ))}
             </div>
+            {stage === Stage.NAME &&
+                <div>
+                    <form id="name-input">
+                        <label htmlFor="name">Choose your name: </label>
+                        <input type="text" id="name" name="name" autoComplete="off"
+                               onChange={(e) => {setPlayerName(e.target.value); setSelected(true);}} />
+                    </form>
+                </div>
+            }
             { selected && <button onClick={advance}>Start your life!</button>}
         </div>
     );
