@@ -76,14 +76,22 @@ const HighSchoolScreen: React.FC<HighSchoolScreenProps> = ({
    decisions
 }) => {
     const [stage, setStage] = useState<Stage>(Stage.SCHEDULE);
+    const [selected, setSelected] = useState<boolean>(false);
     return (
         <div>{
             stage === Stage.SCHEDULE ?
                 <Scheduler  addPersonalityScore={addPersonalityScore} advanceStage={() => setStage(Stage.CLUBS)}
                             decision={decisions[0]}/>
-                : <div></div>
-
+                : <div>
+                    {// @ts-ignore
+                    decisions[1].choices.map(({type, decision}) => (
+                        // @ts-ignore
+                     <button onClick={()=> {addPersonalityScore(type, decisions[1].points);
+                                            setSelected(true);}}>{decision}</button>
+                    ))}
+                </div>
         }
+            {selected && <button onClick={advance}>Let's Go!</button>}
         </div>
     )
 }

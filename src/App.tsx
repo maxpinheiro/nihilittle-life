@@ -7,13 +7,20 @@ import SetupScreen from "./components/SetupScreen";
 import GradeSchoolScreen from "./components/GradeSchoolScreen";
 import HighSchoolScreen from "./components/HighSchoolScreen";
 
-enum stage {INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER, LOVE, CAREER2, RETIREMENT, END_SCENE};
+enum stage {INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER, LOVE,
+CAREER2, RETIREMENT, END_SCENE};
 type age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
+export type career = 'professional athleticism' | 'physical therapy' | 'athletic training' | 'graphic design'
+    | 'fine arts' | 'art history' | 'cybersecurity' | 'artificial intelligence' | 'web development' |
+    'software engineering' | 'social justice' | 'political theory' | 'international relations' |
+    'biology' | 'physics' | 'chemistry' | 'engineering' | 'creative writing' | 'journalism' | 'poetry' | null;
+
 type State = {
   gameStage: stage,
   player: { idx: number, name: string, age: age }
   personalityScore: PersonalityScores,
   pet: number
+  career: career
 }
 
 export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | 'scientist' | 'writer';
@@ -35,7 +42,8 @@ export default class App extends React.Component<any, State> {
       gameStage: stage.INTRO,
       player: { idx: -1, name: '', age: 'child' },
       personalityScore: INIT_SCORES,
-      pet: -1
+      pet: -1,
+      career: null
     }
 
     this.getScene = this.getScene.bind(this);
