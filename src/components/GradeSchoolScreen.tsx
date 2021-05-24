@@ -1,6 +1,38 @@
 import React, {useState} from 'react';
 import {Personality} from "../App";
 
+enum Stage {RECESS, PET};
+
+type RecessProps = {
+    prompt: string,
+    choices: [{ type: Personality, decision: string }],
+    addPersonalityScore: (type: Personality, amt: number) => void,
+    points: number,
+    setStage: (stage: Stage) => void
+}
+
+const Recess: React.FC<RecessProps> = ({
+    prompt,
+    choices,
+    addPersonalityScore,
+    points,
+    setStage
+}) => {
+    const [decType, setType] = useState<Personality | null>(null);
+
+    return (
+        <div id="recess">
+            <p>{prompt}</p>
+            <div>
+                { choices.map(({type, decision}) => (
+                    <button className={`btn ${type === decType ? 'btn-success' : 'btn-outline-success'}`} onClick={() => setType(type)}>{decision}</button>
+                ))}
+            </div>
+            { <button disabled={!decType} className="btn btn-info" onClick={() => {decType && addPersonalityScore(decType, points); setStage(Stage.PET);}}>Onward!</button>}
+        </div>
+    )
+}
+
 type PetProps = {
     setPetIdx: () => void,
     idx: number,
@@ -13,36 +45,9 @@ const PetIcon: React.FC<PetProps> = ({
     selected
 }) => {
     return (
-        <div className="btn" onClick={setPetIdx} style={{backgroundColor: 'mediumaquamarine', border: selected ? 'solid 2px darkgreen' : ''}}>
+        <div className={`btn ${selected ? 'btn-info' : 'btn-outline-info'}`} onClick={setPetIdx} >
             <img src={`/nihilittle-life/media/pets/${idx + 1}.png`} alt=""/>
             <p>{petLabels[idx]}</p>
-        </div>
-    )
-}
-
-type RecessProps = {
-    choices: [{ type: Personality, decision: string }],
-    addPersonalityScore: (type: Personality, amt: number) => void,
-    points: number,
-    setStage: (stage: Stage) => void
-}
-
-const Recess: React.FC<RecessProps> = ({
-    choices,
-    addPersonalityScore,
-    points,
-    setStage
-}) => {
-    return (
-        <div id="recess">
-            <p>{prompt}</p>
-            <div>
-                { choices.map(({type, decision}) => (
-                    <button className="btn btn-success"
-                            onClick={() => { addPersonalityScore(type, points); setStage(Stage.PET); }}
-                    >{decision}</button>
-                )) }
-            </div>
         </div>
     )
 }
@@ -74,12 +79,10 @@ const PetSelect: React.FC<PetSelectProps> = ({
                     />
                 ))}
             </div>
-            { petSelected && <button className="btn btn-primary" onClick={advance}>Onward!</button> }
+            { <button disabled={!petSelected} className="btn btn-primary" onClick={advance}>Onward!</button> }
         </div>
     )
 }
-
-enum Stage {RECESS, PET};
 
 type GradeSchoolScreenProps = {
     advance: () => void,
@@ -106,7 +109,7 @@ const GradeSchoolScreen: React.FC<GradeSchoolScreenProps> = ({
     return (
         <div className="container text-center" id="grade-school">
             { stage === Stage.RECESS ?
-                <Recess addPersonalityScore={addPersonalityScore} choices={choices} points={points} setStage={(stage) => setStage(stage)}/> :
+                <Recess addPersonalityScore={addPersonalityScore} prompt={prompt} choices={choices} points={points} setStage={(stage) => setStage(stage)}/> :
                 <PetSelect petIdx={petIdx} setPetIdx={setPetIdx} advance={advance} />
             }
         </div>

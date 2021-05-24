@@ -23,11 +23,11 @@ advanceStage
 
     const addCourse = (idx: number) => {
         setUnselectedCourses(unselectedCourses.filter( course => course !== idx));
-        setSelectedCourses([... selectedCourses, idx]);
+        setSelectedCourses([...selectedCourses, idx]);
     }
 
     const removeCourse = (idx: number) => {
-        setUnselectedCourses([... unselectedCourses, idx]);
+        setUnselectedCourses([...unselectedCourses, idx]);
         setSelectedCourses(selectedCourses.filter(course => course !== idx));
     }
 
@@ -62,22 +62,29 @@ type ClubFairProps = {
         prompt: string,
         choices: [{ type: Personality, decision: string }]
     }],
-    setSelected: (selected: boolean) => void
+    advance: () => void
 }
 
 const ClubFair: React.FC<ClubFairProps> = ({
     addPersonalityScore,
     decisions,
-    setSelected
+    advance
 }) => {
+    const [selectedType, setSelectedType] = useState<Personality | null>(null);
+
     return (
         <div id="club-fair">
             <p>Welcome to the club fair! Choose your extracurricular:</p>
-            {// @ts-ignore
-                decisions[1].choices.map(({type, decision}) => (
-                    // @ts-ignore
-                    <button className="btn btn-info" onClick={()=> {addPersonalityScore(type, decisions[1].points); setSelected(true);}}>{decision}</button>
-                ))}
+            <div>
+                { // @ts-ignore
+                    decisions[1].choices.map(({type, decision}) => (
+                        // @ts-ignore
+                        <button className={`btn ${type === selectedType ? 'btn-info' : 'btn-outline-info'}`} onClick={() => setSelectedType(type)}>{decision}</button>
+                    ))}
+            </div>
+            { // @ts-ignore
+                <button disabled={!selectedType} className="btn btn-primary" onClick={()=> {addPersonalityScore(selectedType, decisions[1].points); advance();}}>Let's Go!</button>
+            }
         </div>
     )
 }
@@ -100,16 +107,14 @@ const HighSchoolScreen: React.FC<HighSchoolScreenProps> = ({
    decisions
 }) => {
     const [stage, setStage] = useState<Stage>(Stage.SCHEDULE);
-    const [selected, setSelected] = useState<boolean>(false);
 
     return (
         <div className="container text-center" id="high-school">
             { stage === Stage.SCHEDULE ?
-                <Scheduler  addPersonalityScore={addPersonalityScore} advanceStage={() => setStage(Stage.CLUBS)}
-                            decision={decisions[0]}/>
-                : <ClubFair addPersonalityScore={addPersonalityScore} decisions={decisions} setSelected={(selected) => setSelected(selected)} />
+                <Scheduler addPersonalityScore={addPersonalityScore} advanceStage={() => setStage(Stage.CLUBS)}
+                           decision={decisions[0]}/>
+                : <ClubFair addPersonalityScore={addPersonalityScore} decisions={decisions} advance={advance} />
             }
-            { selected && <button className="btn btn-primary" onClick={advance}>Let's Go!</button> }
         </div>
     )
 }
