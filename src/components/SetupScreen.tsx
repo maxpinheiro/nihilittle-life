@@ -11,8 +11,53 @@ const Character: React.FC<CharacterProps> = ({
     selected
  }) => {
     return (
-        <div onClick={setPlayerIdx} style={{backgroundColor: 'gray', border: selected ? 'solid 2px red' : ''}}>
+        <div onClick={setPlayerIdx} style={{backgroundColor: 'gray', border: selected ? 'solid 2px red' : 'solid 1px black'}}>
             <img src={`/nihilittle-life/media/players/${idx+1}_intro.png`} alt="" />
+        </div>
+    )
+}
+
+type CharacterSelectProps = {
+    playerIdx: number,
+    setPlayerIdx: (idx: number) => void,
+    setStage: (stage: Stage) => void
+}
+const CharacterSelect: React.FC<CharacterSelectProps> = ({
+    playerIdx,
+    setPlayerIdx,
+    setStage
+}) => {
+    return (
+        <div id="character-select">
+            <p>Choose your character:</p>
+            {Array(3).fill("").map((_, idx) => (
+                <Character
+                    setPlayerIdx={() => {
+                        setPlayerIdx(idx);
+                        setStage(Stage.NAME);
+                    }}
+                    idx={idx} selected={playerIdx === idx}
+                />
+            ))}
+        </div>
+    )
+}
+
+type NameSelectProps = {
+    setPlayerName: (name: string) => void,
+    setSelected: (selected: boolean) => void
+}
+const NameSelect: React.FC<NameSelectProps> = ({
+    setPlayerName,
+    setSelected
+}) => {
+    return (
+        <div id="name-select">
+            <form>
+                <label htmlFor="name">Choose your name: </label>
+                <input type="text" id="name" name="name" autoComplete="off"
+                       onChange={(e) => {setPlayerName(e.target.value); setSelected(true);}} />
+            </form>
         </div>
     )
 }
@@ -31,32 +76,14 @@ const SetupScreen: React.FC<SetupScreenProps> = ({
     setPlayerName,
     advance
 }) => {
-    const [selected, setSelected] = useState<boolean>(false);
     const [stage, setStage] = useState<Stage>(Stage.CHARACTER);
+    const [selected, setSelected] = useState<boolean>(false);
 
     return (
-        <div>
-            <div id="character-row">
-                {Array(3).fill("").map((_, idx) => (
-                    <Character
-                        setPlayerIdx={() => {
-                            setPlayerIdx(idx);
-                            setStage(Stage.NAME);
-                        }}
-                        idx={idx} selected={playerIdx === idx}
-                    />
-                ))}
-            </div>
-            {stage === Stage.NAME &&
-                <div>
-                    <form id="name-input">
-                        <label htmlFor="name">Choose your name: </label>
-                        <input type="text" id="name" name="name" autoComplete="off"
-                               onChange={(e) => {setPlayerName(e.target.value); setSelected(true);}} />
-                    </form>
-                </div>
-            }
-            { selected && <button onClick={advance}>Start your life!</button>}
+        <div className="container text-center" id="setup">
+            <CharacterSelect playerIdx={playerIdx} setPlayerIdx={setPlayerIdx} setStage={(stage) => setStage(stage)} />
+            { stage === Stage.NAME && <NameSelect setPlayerName={setPlayerName} setSelected={(selected) => setSelected(selected)} /> }
+            { selected && <button className="btn btn-warning" onClick={advance}>Start your life!</button>}
         </div>
     );
 }

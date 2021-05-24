@@ -6,23 +6,18 @@ import IntroScreen from "./components/IntroScreen";
 import SetupScreen from "./components/SetupScreen";
 import GradeSchoolScreen from "./components/GradeSchoolScreen";
 import HighSchoolScreen from "./components/HighSchoolScreen";
+import CollegeScreen from "./components/CollegeScreen";
+import Career1Screen from "./components/Career1Screen";
 
-enum stage {INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER, LOVE,
-CAREER2, RETIREMENT, END_SCENE};
+enum stage { INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER1, LOVE, CAREER2, RETIREMENT, END_SCENE};
 type age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
-export type career = 'professional athleticism' | 'physical therapy' | 'athletic training' | 'graphic design'
-    | 'fine arts' | 'art history' | 'cybersecurity' | 'artificial intelligence' | 'web development' |
-    'software engineering' | 'social justice' | 'political theory' | 'international relations' |
-    'biology' | 'physics' | 'chemistry' | 'engineering' | 'creative writing' | 'journalism' | 'poetry' | null;
-
-type State = {
-  gameStage: stage,
-  player: { idx: number, name: string, age: age }
-  personalityScore: PersonalityScores,
-  pet: number
-  career: career
-}
-
+export type career = null
+    | 'professional athleticism' | 'physical therapy' | 'athletic training'
+    | 'graphic design' | 'fine arts' | 'art history'
+    | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering'
+    | 'social justice' | 'political theory' | 'international relations'
+    | 'biology' | 'physics' | 'chemistry' | 'engineering'
+    | 'creative writing' | 'journalism' | 'poetry';
 export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | 'scientist' | 'writer';
 export type PersonalityScores = {[type in Personality]: number};
 
@@ -33,6 +28,14 @@ const INIT_SCORES: PersonalityScores = {
   politician: 0,
   scientist: 0,
   writer: 0
+}
+
+type State = {
+  gameStage: stage,
+  player: { idx: number, name: string, age: age },
+  personalityScore: PersonalityScores,
+  pet: number,
+  career: career
 }
 
 export default class App extends React.Component<any, State> {
@@ -88,6 +91,12 @@ export default class App extends React.Component<any, State> {
                                   addPersonalityScore={this.addPersonalityScore}
                                   // @ts-ignore
                                   decisions={Decisions["HIGH_SCHOOL"]}/>
+      case stage.COLLEGE:
+        return <CollegeScreen advance={() => this.setScene(stage.CAREER1)}
+                              setCareer={() => {}}
+                              scores={this.state.personalityScore} />
+      case stage.CAREER1:
+        return <Career1Screen advance={() => this.setScene(stage.LOVE)} />
       default:
         return <div/>
     }

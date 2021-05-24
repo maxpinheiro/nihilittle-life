@@ -6,7 +6,6 @@ type PetProps = {
     idx: number,
     selected: boolean
 }
-
 const petLabels: string[] = ['fish', 'cat', 'dog', 'guinea pig', 'snake'];
 const PetIcon: React.FC<PetProps> = ({
     setPetIdx,
@@ -14,9 +13,68 @@ const PetIcon: React.FC<PetProps> = ({
     selected
 }) => {
     return (
-        <div onClick={setPetIdx} style={{backgroundColor: 'cyan', border: selected ? 'solid 2px darkgreen' : ''}}>
+        <div className="btn" onClick={setPetIdx} style={{backgroundColor: 'mediumaquamarine', border: selected ? 'solid 2px darkgreen' : ''}}>
             <img src={`/nihilittle-life/media/pets/${idx + 1}.png`} alt=""/>
             <p>{petLabels[idx]}</p>
+        </div>
+    )
+}
+
+type RecessProps = {
+    choices: [{ type: Personality, decision: string }],
+    addPersonalityScore: (type: Personality, amt: number) => void,
+    points: number,
+    setStage: (stage: Stage) => void
+}
+
+const Recess: React.FC<RecessProps> = ({
+    choices,
+    addPersonalityScore,
+    points,
+    setStage
+}) => {
+    return (
+        <div id="recess">
+            <p>{prompt}</p>
+            <div>
+                { choices.map(({type, decision}) => (
+                    <button className="btn btn-success"
+                            onClick={() => { addPersonalityScore(type, points); setStage(Stage.PET); }}
+                    >{decision}</button>
+                )) }
+            </div>
+        </div>
+    )
+}
+
+type PetSelectProps = {
+    petIdx: number,
+    setPetIdx: (pet: number) => void,
+    advance: () => void,
+}
+
+const PetSelect: React.FC<PetSelectProps> = ({
+    petIdx,
+    setPetIdx,
+    advance
+}) => {
+    const [petSelected, setPetSelected] = useState<boolean>(false);
+
+    return (
+        <div id="pet-select">
+            <p>You're playing M.A.S.H. - what pet do you end up with?</p>
+            <div>
+                {Array(5).fill("").map((_, idx) => (
+                    <PetIcon
+                        setPetIdx={() => {
+                            setPetIdx(idx);
+                            setPetSelected(true);
+                        }}
+                        idx={idx} selected={petIdx === idx}
+                    />
+                ))}
+            </div>
+            { petSelected && <button className="btn btn-primary" onClick={advance}>Onward!</button> }
         </div>
     )
 }
@@ -43,35 +101,13 @@ const GradeSchoolScreen: React.FC<GradeSchoolScreenProps> = ({
     petIdx,
     decision: {points, prompt, choices}
 }) => {
-    const [petSelected, setPetSelected] = useState<boolean>(false);
     const [stage, setStage] = useState<Stage>(Stage.RECESS);
 
     return (
-        <div>
-            {stage === Stage.RECESS ?
-                <div>
-                    <p>{prompt}</p>
-                    {choices.map(({type, decision}) => (
-                        <button onClick={() => {
-                            addPersonalityScore(type, points);
-                            setStage(Stage.PET);
-                        }}>{decision}</button>
-                    ))}
-                </div> :
-
-                <div id="pet-row">
-                    <p>You're playing M.A.S.H. - what pet do you end up with?</p>
-                    {Array(5).fill("").map((_, idx) => (
-                        <PetIcon
-                            setPetIdx={() => {
-                                setPetIdx(idx);
-                                setPetSelected(true);
-                            }}
-                            idx={idx} selected={petIdx === idx}
-                        />
-                    ))}
-                    { petSelected && <button onClick={advance}>Onward!</button>}
-                </div>
+        <div className="container text-center" id="grade-school">
+            { stage === Stage.RECESS ?
+                <Recess addPersonalityScore={addPersonalityScore} choices={choices} points={points} setStage={(stage) => setStage(stage)}/> :
+                <PetSelect petIdx={petIdx} setPetIdx={setPetIdx} advance={advance} />
             }
         </div>
     );
