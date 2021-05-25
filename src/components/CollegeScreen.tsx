@@ -1,19 +1,19 @@
 import React, {useState} from 'react';
 import { personalities, Personality, PersonalityScores, Career } from "../App";
 
-enum Stage {APPLY, COMMIT, CONCENTRATION};
+enum Stage {APPLY, COMMIT, PASSION, CONCENTRATION, VOCATION};
 
 type ApplicationProps = {
     scores: PersonalityScores,
-    names: {[personality in Personality]: {true: string, false: string}},
-    setNoCollege: (state: boolean) => void,
+    names: {[personality in Personality]: string},
+    setCollege: (state: boolean) => void,
     setAcceptedSchools: (schools: Personality[]) => void,
     setStage: (stage: Stage) => void
 }
 const Application: React.FC<ApplicationProps> = ({
     scores,
     names,
-    setNoCollege,
+    setCollege,
     setAcceptedSchools,
     setStage
 }) => {
@@ -47,7 +47,7 @@ const Application: React.FC<ApplicationProps> = ({
                 )) }
             </div>
             <button disabled={selectedSchools.length < 1} className="btn btn-success" onClick={() => sendApplications()}>Apply to College!</button>
-            <div><button className="btn btn-secondary" onClick={() => {setNoCollege(true); setStage(Stage.CONCENTRATION);}}>Pursue a Career Outside of College!</button></div>
+            <div><button className="btn btn-secondary" onClick={() => {setCollege(false); setStage(Stage.PASSION);}}>Pursue a Career Outside of College!</button></div>
 
         </div>
     )
@@ -56,7 +56,7 @@ const Application: React.FC<ApplicationProps> = ({
 type CommitmentProps = {
     acceptedSchools: Personality[],
     setPersonality: (personality: Personality) => void,
-    names: {[personality in Personality]: {true: string, false: string}},
+    names: {[personality in Personality]: string},
     setStage: (stage: Stage) => void
 }
 const Commitment: React.FC<CommitmentProps> = ({
@@ -83,22 +83,49 @@ const Commitment: React.FC<CommitmentProps> = ({
     )
 }
 
+
+type PassionProps = {
+    setPersonality: (personality: Personality) => void,
+    setStage: (stage: Stage) => void
+}
+const Passion: React.FC<PassionProps> = ({
+                                                   setPersonality,
+                                                   setStage
+                                               }) => {
+    const [decision, setDecision] = useState<Personality | null>(null);
+    return (
+        <div className="" id="commitment">
+            <p>What career interests you?</p>
+            <div className="justify-content-between">
+                { personalities.map((personality, idx) => (
+                    <div key={idx}>
+                        <button className={`btn ${decision === personality ? 'btn-info' : 'btn-outline-info'}`}
+                                onClick={() => setDecision(personality)}>{personality}</button>
+                    </div> ))}
+            </div>
+            <button disabled={!decision} className="btn btn-success" onClick={() => {if (decision) setPersonality(decision); setStage(Stage.VOCATION)}}>
+                See where this passion takes you!
+            </button>
+        </div>
+    )
+}
+
 const capitalizeSentence: (str: string) => string = (str) => {
     return str.split(' ').map(s => s.charAt(0).toUpperCase() + s.substr(1).toLowerCase()).join(' ');
 }
 
 type ConcentrationProps = {
     personality: Personality,
-    concentrations: {[personality in Personality]: {true: Career[], false: Career[]}},
+    careers: {[personality in Personality]: {true: Career[], false: Career[]}},
     setCareer: (career: Career) => void,
-    advance: () => void
+    advance: () => void,
 }
 
 const Concentration: React.FC<ConcentrationProps> = ({
     personality,
-    concentrations,
+    careers,
     setCareer,
-    advance
+    advance,
 }) => {
         const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
 
@@ -106,16 +133,52 @@ const Concentration: React.FC<ConcentrationProps> = ({
             <div>
                 <p>Select your concentration for your degree!</p>
                     <div className="justify-content-between">
-                        {concentrations[personality]["true"].map((concentration, idx) =>
+                        {careers[personality]["true"].map((career, idx) =>
                             <button key={idx}
-                                className={`btn ${selectedCareer === concentration ? 'btn-success' : 'btn-outline-success'}`}
-                                onClick={() => setSelectedCareer(concentration)}>{capitalizeSentence(concentration)}</button>
+                                className={`btn ${selectedCareer === career ? 'btn-success' : 'btn-outline-success'}`}
+                                onClick={() => setSelectedCareer(career)}>{capitalizeSentence(career)}</button>
                         )}
                     </div>
                 <button className="btn btn-info" disabled={!selectedCareer} onClick={() => {if (selectedCareer) setCareer(selectedCareer); advance();}}>Onward!</button>
             </div>
         )
     }
+
+type VocationProps = {
+    personality: Personality,
+    careers: {[personality in Personality]: {true: Career[], false: Career[]}},
+    setCareer: (career: Career) => void,
+    advance: () => void,
+    setStage: (stage: Stage) => void
+}
+
+const Vocation: React.FC<VocationProps> = ({
+                                                         personality,
+                                                         careers,
+                                                         setCareer,
+                                                         advance,
+                                                         setStage
+                                                     }) => {
+    const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
+
+    return (
+        <div>
+            <p>So you want to become {(personality === "artist" || personality === "athlete") ? "an" : "a"} {personality}, select your vocation:</p>
+
+            <div className="justify-content-between">
+                {careers[personality]["false"].map((career, idx) =>
+                    <button key={idx}
+                            className={`btn ${selectedCareer === career ? 'btn-success' : 'btn-outline-success'}`}
+                            onClick={() => setSelectedCareer(career)}>{capitalizeSentence(career)}</button>
+                )}
+            </div>
+            <button className="btn btn-info" disabled={!selectedCareer} onClick={() => {if (selectedCareer) setCareer(selectedCareer); advance();}}>Onward!</button>
+            <p>Is this really you?</p>
+            <button className="btn btn-primary" onClick={() => setStage(Stage.PASSION)}>Backsies Button</button>
+        </div>
+    )
+}
+
 
 type CollegeScreenProps = {
     advance: () => void,
@@ -124,8 +187,8 @@ type CollegeScreenProps = {
     setCareer: (career: Career) => void,
     scores: PersonalityScores,
     decision: {
-        names: {[personality in Personality]: {true: string, false: string}},
-        concentrations: {[personality in Personality]: {true: Career[], false: Career[]}}
+        names: {[personality in Personality]: string},
+        careers: {[personality in Personality]: {true: Career[], false: Career[]}}
     },
 }
 
@@ -135,17 +198,19 @@ const CollegeScreen: React.FC<CollegeScreenProps> = ({
     setPersonality,
     setCareer,
     scores,
-    decision: {names, concentrations}
+    decision: {names, careers}
 }) => {
     const [stage, setStage] = useState<Stage>(Stage.APPLY);
     const [acceptedSchools, setAcceptedSchools] = useState<Personality[]>([]);
-    const [noCollege, setNoCollege] = useState<boolean>(false);
+    const [college, setCollege] = useState<boolean>(true);
 
     return (
         <div className="container text-center">
-            { stage === Stage.APPLY && <Application scores={scores} names={names}  setStage={setStage} setAcceptedSchools={setAcceptedSchools} setNoCollege={setNoCollege} /> }
+            { stage === Stage.APPLY && <Application scores={scores} names={names}  setStage={setStage} setAcceptedSchools={setAcceptedSchools} setCollege={setCollege} /> }
             { stage === Stage.COMMIT && <Commitment acceptedSchools={acceptedSchools} setPersonality={setPersonality} names={names} setStage={setStage} /> }
-            { stage === Stage.CONCENTRATION && personality && <Concentration personality={personality} concentrations={concentrations} setCareer={setCareer} advance={advance} /> }
+            { stage === Stage.PASSION && <Passion setPersonality={setPersonality} setStage={setStage}/>}
+            { stage === Stage.CONCENTRATION && personality && <Concentration personality={personality} careers={careers} setCareer={setCareer} advance={advance} /> }
+            { stage === Stage.VOCATION && personality && <Vocation personality={personality} careers={careers} setCareer={setCareer} advance={advance} setStage={setStage}/>}
         </div>
     );
 };

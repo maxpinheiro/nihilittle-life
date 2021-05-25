@@ -14,12 +14,12 @@ type Age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
 export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | 'scientist' | 'writer';
 export type PersonalityScores = {[type in Personality]: number};
 export type Career =
-    | 'professional athleticism' | 'physical therapy' | 'athletic training' | 'coaching'
-    | 'graphic design' | 'fine arts' | 'art history' | 'murals'
-    | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering'
-    | 'social justice' | 'political theory' | 'international relations' | 'city council'
-    | 'biology' | 'physics' | 'chemistry' | 'engineering' | 'pharmacology'
-    | 'creative writing' | 'journalism' | 'poetry' | 'magazine editing';
+    | 'professional athleticism' | 'physical therapy' | 'athletic training' | 'coaching' | 'personal training'
+    | 'graphic design' | 'fine arts' | 'art history' | 'public art'
+    | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering' | 'I.T.' | 'hacking'
+    | 'social justice' | 'political theory' | 'international relations' | 'city council' | 'charity administration'
+    | 'biology' | 'physics' | 'electrical work' | 'chemistry' | 'engineering' | 'pharmacology' | 'drug production'
+    | 'creative writing' | 'journalism' | 'poetry' | 'magazine editing' | 'copywriting';
 
 export const personalities: Personality[] = ['athlete', 'artist', 'programmer', 'politician', 'scientist', 'writer'];
 const INIT_SCORES: PersonalityScores = {

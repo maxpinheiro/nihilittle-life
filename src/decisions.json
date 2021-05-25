@@ -100,30 +100,30 @@
       "scientist": "Nye College of Science",
       "writer": "Fitzgerald School of Literary Arts"
     },
-    "concentrations": {
+    "careers": {
       "athlete": {
         "true": ["professional athleticism", "physical therapy", "athletic training"],
-        "false": ["coaching"]
+        "false": ["coaching", "personal training"]
       },
       "artist": {
         "true": ["graphic design", "fine arts", "art history"],
-        "false": ["murals", "graphic design"]
+        "false": ["public art", "graphic design", "fine arts"]
       },
       "programmer": {
         "true": ["cyber security", "artificial intelligence", "web development", "software engineering"],
-        "false": ["web development"]
+        "false": ["web development", "I.T.", "hacking"]
       },
       "politician": {
         "true": ["social justice", "political theory", "international relations"],
-        "false": ["city council"]
+        "false": ["city council", "charity administration"]
       },
       "scientist": {
         "true": ["biology", "physics", "chemistry", "engineering"],
-        "false": ["pharmacology"]
+        "false": ["pharmacology", "drug production", "electrical work"]
       },
       "writer": {
         "true": ["creative writing", "journalism", "poetry"],
-        "false": ["magazine editing"]
+        "false": ["magazine editing", "copywriting"]
       }
     }
   }
