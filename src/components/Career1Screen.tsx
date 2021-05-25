@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import {Career} from "../App";
-
+import React from 'react';
 
 type Career1ScreenProps = {
     advance: () => void

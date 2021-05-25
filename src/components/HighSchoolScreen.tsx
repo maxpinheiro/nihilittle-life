@@ -37,13 +37,13 @@ advanceStage
             <div className="row justify-content-around">
                 <div id="unselected-courses" className="col d-flex flex-column">
                     {Array(6).fill("").map((_, idx) => (
-                        <button className={`${selectedCourses.includes(idx) && 'invisible' } btn btn-info`}
+                        <button className={`${selectedCourses.includes(idx) && 'invisible' } btn btn-info`} key={idx}
                             onClick={() => {if (selectedCourses.length < 3) addCourse(idx)}}>{decision.choices[idx].decision}</button>
                     ))}
                 </div>
                 <div id="selected-schedule"  className="col d-flex flex-column">
                     {selectedCourses.map((idx) =>
-                        <button className="btn btn-success" onClick={() => {removeCourse(idx)}}>{decision.choices[idx].decision}</button>
+                        <button className="btn btn-success" key={idx} onClick={() => {removeCourse(idx)}}>{decision.choices[idx].decision}</button>
                     )}
                 </div>
             </div>
@@ -58,6 +58,10 @@ advanceStage
 type ClubFairProps = {
     addPersonalityScore: (type: Personality, amt: number) => void,
     decisions: [{
+        points: number,
+        prompt: string,
+        choices: [{ type: Personality, decision: string }]
+    }, {
         points: number,
         prompt: string,
         choices: [{ type: Personality, decision: string }]
@@ -76,14 +80,12 @@ const ClubFair: React.FC<ClubFairProps> = ({
         <div id="club-fair">
             <p>Welcome to the club fair! Choose your extracurricular:</p>
             <div>
-                { // @ts-ignore
-                    decisions[1].choices.map(({type, decision}) => (
-                        // @ts-ignore
-                        <button className={`btn ${type === selectedType ? 'btn-info' : 'btn-outline-info'}`} onClick={() => setSelectedType(type)}>{decision}</button>
-                    ))}
+                { decisions[1].choices.map(({type, decision}, idx) => (
+                    <button className={`btn ${type === selectedType ? 'btn-info' : 'btn-outline-info'}`} key={idx} onClick={() => setSelectedType(type)}>{decision}</button>
+                ))}
             </div>
-            { // @ts-ignore
-                <button disabled={!selectedType} className="btn btn-primary" onClick={()=> {addPersonalityScore(selectedType, decisions[1].points); advance();}}>Let's Go!</button>
+            {
+                <button disabled={!selectedType} className="btn btn-primary" onClick={()=> { if (selectedType) addPersonalityScore(selectedType, decisions[1].points); advance();}}>Let's Go!</button>
             }
         </div>
     )
@@ -94,6 +96,10 @@ type HighSchoolScreenProps = {
     advance: () => void,
     addPersonalityScore: (type: Personality, amt: number) => void,
     decisions: [{
+        points: number,
+        prompt: string,
+        choices: [{ type: Personality, decision: string }]
+    }, {
         points: number,
         prompt: string,
         choices: [{ type: Personality, decision: string }]

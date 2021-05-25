@@ -13,7 +13,7 @@ enum stage { INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER1, LOVE, CA
 type Age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
 export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | 'scientist' | 'writer';
 export type PersonalityScores = {[type in Personality]: number};
-export type Career = null
+export type Career =
     | 'professional athleticism' | 'physical therapy' | 'athletic training' | 'coaching'
     | 'graphic design' | 'fine arts' | 'art history' | 'murals'
     | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering'
@@ -37,7 +37,7 @@ type State = {
   personalityScore: PersonalityScores,
   personality: Personality | null,
   pet: number,
-  career: Career
+  career: Career | null
 }
 
 export default class App extends React.Component<any, State> {
@@ -62,12 +62,12 @@ export default class App extends React.Component<any, State> {
     this.setCareer = this.setCareer.bind(this);
   }
 
-  componentDidMount() {
-
+  componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<State>, snapshot?: any) {
+    // print state beginning of every stage
+    if (prevState.gameStage !== this.state.gameStage) console.log(this.state);
   }
 
   render() {
-    console.log(this.state);
     return (
         <div>
           { this.getScene() }

@@ -102,28 +102,28 @@
     },
     "concentrations": {
       "athlete": {
-        "true": ["Professional Athleticism", "Physical Therapy", "Athletic Training"],
-        "false": ["Coaching"]
+        "true": ["professional athleticism", "physical therapy", "athletic training"],
+        "false": ["coaching"]
       },
       "artist": {
-        "true": ["Graphic Design", "Fine Arts", "Art history"],
-        "false": ["Murals", "Graphic Design"]
+        "true": ["graphic design", "fine arts", "art history"],
+        "false": ["murals", "graphic design"]
       },
       "programmer": {
-        "true": ["Cyber Security", "Artificial Intelligence", "Web Development", "Software Engineering"],
-        "false": ["Web Development"]
+        "true": ["cyber security", "artificial intelligence", "web development", "software engineering"],
+        "false": ["web development"]
       },
       "politician": {
-        "true": ["Social Justice", "Political Theory", "International Relations"],
-        "false": ["City Council"]
+        "true": ["social justice", "political theory", "international relations"],
+        "false": ["city council"]
       },
       "scientist": {
-        "true": ["Biology", "Physics", "Chemistry", "Engineering"],
-        "false": ["Pharmacology"]
+        "true": ["biology", "physics", "chemistry", "engineering"],
+        "false": ["pharmacology"]
       },
       "writer": {
-        "true": ["Creative Writing", "Journalism", "Poetry"],
-        "false": ["Magazine Editing"]
+        "true": ["creative writing", "journalism", "poetry"],
+        "false": ["magazine editing"]
       }
     }
   }

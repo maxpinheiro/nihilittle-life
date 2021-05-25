@@ -54,11 +54,11 @@ const NameSelect: React.FC<NameSelectProps> = ({
 
     return (
         <div id="name-select" className="my-2">
-            <form>
+            <div>
                 <label htmlFor="name" className="mr-2">Choose your name: </label>
                 <input type="text" id="name" name="name" autoComplete="off"
                        onChange={(e) => {setPlayerName(e.target.value); setSelected(true);}} />
-            </form>
+            </div>
             <button disabled={!selected} className="btn btn-warning" onClick={advance}>Start your life!</button>
         </div>
     )

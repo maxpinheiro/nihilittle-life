@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Personality, PersonalityScores, Career } from "../App";
 
 const personalities: Personality[] = ['athlete', 'artist', 'programmer', 'politician', 'scientist', 'writer'];
@@ -48,10 +48,9 @@ const Application: React.FC<ApplicationProps> = ({
                     </div>
                 )) }
             </div>
-            <button disabled={selectedSchools.length < 1} className="btn btn-success" onClick={() => sendApplications()}>
-                Apply to College!
-            </button>
-            <button className={'d-block btn btn-secondary'} onClick={() => {setNoCollege(true); setStage(Stage.CONCENTRATION);}}>Pursue a Career Outside of College!</button>
+            <button disabled={selectedSchools.length < 1} className="btn btn-success" onClick={() => sendApplications()}>Apply to College!</button>
+            <div><button className="btn btn-secondary" onClick={() => {setNoCollege(true); setStage(Stage.CONCENTRATION);}}>Pursue a Career Outside of College!</button></div>
+
         </div>
     )
 }
@@ -86,6 +85,9 @@ const Commitment: React.FC<CommitmentProps> = ({
     )
 }
 
+const capitalizeSentence: (str: string) => string = (str) => {
+    return str.split(' ').map(s => s.charAt(0).toUpperCase() + s.substr(1).toLowerCase()).join(' ');
+}
 
 type ConcentrationProps = {
     personality: Personality,
@@ -100,16 +102,19 @@ const Concentration: React.FC<ConcentrationProps> = ({
     setCareer,
     advance
 }) => {
-        const [selectedCareer, setSelectedCareer] = useState<Career>(null);
+        const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
 
         return (
             <div>
                 <p>Select your concentration for your degree!</p>
-                    <div className="justify-content-between">{concentrations[personality]["true"].map((concentration, idx) =>
-                        <button
-                            className={`btn ${selectedCareer === concentration ? 'btn-success' : 'btn-outline-success'}`}
-                            onClick={() => setSelectedCareer(concentration)}>{concentration}</button>)}</div>
-                <button className="btn btn-info" disabled={!selectedCareer} onClick={advance}>Onward!</button>
+                    <div className="justify-content-between">
+                        {concentrations[personality]["true"].map((concentration, idx) =>
+                            <button key={idx}
+                                className={`btn ${selectedCareer === concentration ? 'btn-success' : 'btn-outline-success'}`}
+                                onClick={() => setSelectedCareer(concentration)}>{capitalizeSentence(concentration)}</button>
+                        )}
+                    </div>
+                <button className="btn btn-info" disabled={!selectedCareer} onClick={() => {if (selectedCareer) setCareer(selectedCareer); advance();}}>Onward!</button>
             </div>
         )
     }

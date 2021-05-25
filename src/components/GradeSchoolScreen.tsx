@@ -24,8 +24,8 @@ const Recess: React.FC<RecessProps> = ({
         <div id="recess">
             <p>{prompt}</p>
             <div>
-                { choices.map(({type, decision}) => (
-                    <button className={`btn ${type === decType ? 'btn-success' : 'btn-outline-success'}`} onClick={() => setType(type)}>{decision}</button>
+                { choices.map(({type, decision}, idx) => (
+                    <button className={`btn ${type === decType ? 'btn-success' : 'btn-outline-success'}`} onClick={() => setType(type)} key={idx}>{decision}</button>
                 ))}
             </div>
             { <button disabled={!decType} className="btn btn-info" onClick={() => {decType && addPersonalityScore(decType, points); setStage(Stage.PET);}}>Onward!</button>}
@@ -75,7 +75,7 @@ const PetSelect: React.FC<PetSelectProps> = ({
                             setPetIdx(idx);
                             setPetSelected(true);
                         }}
-                        idx={idx} selected={petIdx === idx}
+                        idx={idx} key={idx} selected={petIdx === idx}
                     />
                 ))}
             </div>
