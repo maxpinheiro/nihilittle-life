@@ -8,12 +8,14 @@ enum Stage {APPLY, COMMIT, CONCENTRATION};
 type ApplicationProps = {
     scores: PersonalityScores,
     names: {[personality in Personality]: string},
+    setNoCollege: (state: boolean) => void,
     setAcceptedSchools: (schools: Personality[]) => void,
     setStage: (stage: Stage) => void
 }
 const Application: React.FC<ApplicationProps> = ({
     scores,
     names,
+    setNoCollege,
     setAcceptedSchools,
     setStage
 }) => {
@@ -49,6 +51,7 @@ const Application: React.FC<ApplicationProps> = ({
             <button disabled={selectedSchools.length < 1} className="btn btn-success" onClick={() => sendApplications()}>
                 Apply to College!
             </button>
+            <button className={'btn btn-secondary'} onClick={() => {setNoCollege(true); setStage(Stage.CONCENTRATION);}}>Pursue a Career Outside of College!</button>
         </div>
     )
 }
@@ -83,6 +86,28 @@ const Commitment: React.FC<CommitmentProps> = ({
     )
 }
 
+
+type ConcentrationProps = {
+    personality: Personality,
+    concentrations: {[personality in Personality]: Career[]},
+    setCareer: (career: Career) => void,
+    advance: () => void
+}
+
+const Concentration: React.FC<ConcentrationProps> =
+    ({personality, concentrations, setCareer, advance}) => {
+
+        const [selectedCareer, setSelectedCareer] = useState<Career>(null);
+        return (<div>
+            <p>Select your concentration for your degree!</p>
+            <div className={'justify-content-between'}>{concentrations[personality].map((concentration, idx) =>
+                <button className={`btn ${selectedCareer === concentration ? 'btn-success' : 'btn-outline-success'}`}
+                        onClick={() => {setSelectedCareer(concentration);}}>{concentration}</button>)}</div>
+            <button className={'btn btn-info'} disabled={!selectedCareer} onClick={advance}>Onward!</button>
+
+        </div>)
+    }
+
 type CollegeScreenProps = {
     advance: () => void,
     personality: Personality | null,
@@ -91,12 +116,13 @@ type CollegeScreenProps = {
     scores: PersonalityScores,
     decision: {
         names: {[personality in Personality]: string},
-        concentrations: {[personality in Personality]: string[]}
+        concentrations: {[personality in Personality]: Career[]}
     },
 }
 
 const CollegeScreen: React.FC<CollegeScreenProps> = ({
     advance,
+    personality,
     setPersonality,
     setCareer,
     scores,
@@ -104,11 +130,14 @@ const CollegeScreen: React.FC<CollegeScreenProps> = ({
 }) => {
     const [stage, setStage] = useState<Stage>(Stage.APPLY);
     const [acceptedSchools, setAcceptedSchools] = useState<Personality[]>([]);
+    const [noCollege, setNoCollege] = useState<boolean>(false);
 
     return (
         <div className="container text-center">
-            { stage === Stage.APPLY && <Application scores={scores} names={names}  setStage={setStage} setAcceptedSchools={setAcceptedSchools}/> }
+            { stage === Stage.APPLY && <Application scores={scores} names={names}  setStage={setStage} setAcceptedSchools={setAcceptedSchools} setNoCollege={setNoCollege}/> }
             { stage === Stage.COMMIT && <Commitment acceptedSchools={acceptedSchools} setPersonality={setPersonality} names={names} setStage={setStage} /> }
+            { // @ts-ignore
+                stage === Stage.CONCENTRATION && <Concentration personality={personality} concentrations={concentrations} setCareer={setCareer} advance={advance}/>}
         </div>
     );
 };
