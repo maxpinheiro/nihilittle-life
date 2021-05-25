@@ -91,22 +91,40 @@
       ]
     }
   ],
-  "COLLEGE" : {
-    "names" :  {
-      "athlete" : "Marino Athletic Institute",
-      "artist" : "Maxwell Davis School of Arts",
+  "COLLEGE": {
+    "names":  {
+      "athlete": "Marino Athletic Institute",
+      "artist": "Maxwell Davis School of Arts",
       "programmer": "Hescott College of Computer Science",
-      "politician" : "Minaj School of Political Science",
-      "scientist" : "Nye College of Science",
-      "writer" : "Fitzgerald School of Literary Arts"
+      "politician": "Minaj School of Political Science",
+      "scientist": "Nye College of Science",
+      "writer": "Fitzgerald School of Literary Arts"
     },
     "concentrations": {
-      "athlete" : ["Professional Athleticism", "Physical Therapy", "Athletic Training"],
-      "artist" : ["Graphic Design", "Fine Arts", "Art history"],
-      "programmer" : ["Cyber Security", "Artificial Intelligence", "Web Development", "Software Engineering"],
-      "politician" : ["Social Justice", "Political Theory", "International Relations"],
-      "scientist" : ["Biology", "Physics", "Chemistry", "Engineering"],
-      "writer" : ["Creative Writing", "Journalism", "Poetry"]
+      "athlete": {
+        "true": ["Professional Athleticism", "Physical Therapy", "Athletic Training"],
+        "false": ["Coaching"]
+      },
+      "artist": {
+        "true": ["Graphic Design", "Fine Arts", "Art history"],
+        "false": ["Murals", "Graphic Design"]
+      },
+      "programmer": {
+        "true": ["Cyber Security", "Artificial Intelligence", "Web Development", "Software Engineering"],
+        "false": ["Web Development"]
+      },
+      "politician": {
+        "true": ["Social Justice", "Political Theory", "International Relations"],
+        "false": ["City Council"]
+      },
+      "scientist": {
+        "true": ["Biology", "Physics", "Chemistry", "Engineering"],
+        "false": ["Pharmacology"]
+      },
+      "writer": {
+        "true": ["Creative Writing", "Journalism", "Poetry"],
+        "false": ["Magazine Editing"]
+      }
     }
   }
 }
