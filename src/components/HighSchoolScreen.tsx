@@ -111,8 +111,7 @@ const HighSchoolScreen: React.FC<HighSchoolScreenProps> = ({
     return (
         <div className="container text-center" id="high-school">
             { stage === Stage.SCHEDULE ?
-                <Scheduler addPersonalityScore={addPersonalityScore} advanceStage={() => setStage(Stage.CLUBS)}
-                           decision={decisions[0]}/>
+                <Scheduler addPersonalityScore={addPersonalityScore} advanceStage={() => setStage(Stage.CLUBS)} decision={decisions[0]}/>
                 : <ClubFair addPersonalityScore={addPersonalityScore} decisions={decisions} advance={advance} />
             }
         </div>

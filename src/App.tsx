@@ -10,16 +10,17 @@ import CollegeScreen from "./components/CollegeScreen";
 import Career1Screen from "./components/Career1Screen";
 
 enum stage { INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER1, LOVE, CAREER2, RETIREMENT, END_SCENE};
-type age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
-export type career = null
+type Age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
+export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | 'scientist' | 'writer';
+export type PersonalityScores = {[type in Personality]: number};
+export type Career = null
     | 'professional athleticism' | 'physical therapy' | 'athletic training'
     | 'graphic design' | 'fine arts' | 'art history'
     | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering'
     | 'social justice' | 'political theory' | 'international relations'
     | 'biology' | 'physics' | 'chemistry' | 'engineering'
     | 'creative writing' | 'journalism' | 'poetry';
-export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | 'scientist' | 'writer';
-export type PersonalityScores = {[type in Personality]: number};
+
 
 const INIT_SCORES: PersonalityScores = {
   athlete: 0,
@@ -32,10 +33,11 @@ const INIT_SCORES: PersonalityScores = {
 
 type State = {
   gameStage: stage,
-  player: { idx: number, name: string, age: age },
+  player: { idx: number, name: string, age: Age },
   personalityScore: PersonalityScores,
+  personality: Personality | null,
   pet: number,
-  career: career
+  career: Career
 }
 
 export default class App extends React.Component<any, State> {
@@ -45,6 +47,7 @@ export default class App extends React.Component<any, State> {
       gameStage: stage.INTRO,
       player: { idx: -1, name: '', age: 'child' },
       personalityScore: INIT_SCORES,
+      personality: null,
       pet: -1,
       career: null
     }
@@ -55,6 +58,8 @@ export default class App extends React.Component<any, State> {
     this.setPlayerIdx = this.setPlayerIdx.bind(this);
     this.setPlayerName = this.setPlayerName.bind(this);
     this.addPersonalityScore = this.addPersonalityScore.bind(this);
+    this.setPersonality = this.setPersonality.bind(this);
+    this.setCareer = this.setCareer.bind(this);
   }
 
   componentDidMount() {
@@ -90,11 +95,15 @@ export default class App extends React.Component<any, State> {
         return <HighSchoolScreen  advance={() => this.setScene(stage.COLLEGE)}
                                   addPersonalityScore={this.addPersonalityScore}
                                   // @ts-ignore
-                                  decisions={Decisions["HIGH_SCHOOL"]}/>
+                                  decisions={Decisions["HIGH_SCHOOL"]} />
       case stage.COLLEGE:
         return <CollegeScreen advance={() => this.setScene(stage.CAREER1)}
-                              setCareer={() => {}}
-                              scores={this.state.personalityScore} />
+                              personality={this.state.personality}
+                              setPersonality={this.setPersonality}
+                              setCareer={this.setCareer}
+                              scores={this.state.personalityScore}
+                              // @ts-ignore
+                              decision={Decisions["COLLEGE"]}/>
       case stage.CAREER1:
         return <Career1Screen advance={() => this.setScene(stage.LOVE)} />
       default:
@@ -104,7 +113,7 @@ export default class App extends React.Component<any, State> {
 
   setScene(scene: stage) {
     this.setState(prevState => ({...prevState, gameStage: scene}));
-    const ages: {[scene: number] : age} = {3: "adolescent", 4: "young_adult", 6: "adult", 8: "old"};
+    const ages: {[scene: number] : Age} = {3: "adolescent", 4: "young_adult", 6: "adult", 8: "old"};
     if (scene in ages) this.setState(prevState => ({...prevState, player: {...prevState.player, age: ages[scene]}}));
   }
 
@@ -124,6 +133,14 @@ export default class App extends React.Component<any, State> {
     let scores: PersonalityScores = {...this.state.personalityScore};
     scores[type] += amt;
     this.setState(prevState => ({...prevState, personalityScore: scores}));
+  }
+
+  setPersonality(personality: Personality) {
+    this.setState(prevState => ({...prevState, personality}));
+  }
+
+  setCareer(career: Career) {
+    this.setState(prevState => ({...prevState, career}));
   }
 
 }

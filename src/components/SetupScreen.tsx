@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 
-enum Stage {CHARACTER, NAME};
-
 type CharacterProps = {
     setPlayerIdx: () => void,
     idx: number,
@@ -21,13 +19,11 @@ const Character: React.FC<CharacterProps> = ({
 
 type CharacterSelectProps = {
     playerIdx: number,
-    setPlayerIdx: (idx: number) => void,
-    setStage: (stage: Stage) => void
+    setPlayerIdx: (idx: number) => void
 }
 const CharacterSelect: React.FC<CharacterSelectProps> = ({
     playerIdx,
-    setPlayerIdx,
-    setStage
+    setPlayerIdx
 }) => {
     return (
         <div id="character-select">
@@ -37,7 +33,6 @@ const CharacterSelect: React.FC<CharacterSelectProps> = ({
                     <Character
                         setPlayerIdx={() => {
                             setPlayerIdx(idx);
-                            setStage(Stage.NAME);
                         }}
                         idx={idx} selected={playerIdx === idx} key={idx}
                     />
@@ -49,12 +44,14 @@ const CharacterSelect: React.FC<CharacterSelectProps> = ({
 
 type NameSelectProps = {
     setPlayerName: (name: string) => void,
-    setSelected: (selected: boolean) => void
+    advance: () => void
 }
 const NameSelect: React.FC<NameSelectProps> = ({
     setPlayerName,
-    setSelected
+    advance
 }) => {
+    const [selected, setSelected] = useState<boolean>(false);
+
     return (
         <div id="name-select" className="my-2">
             <form>
@@ -62,30 +59,27 @@ const NameSelect: React.FC<NameSelectProps> = ({
                 <input type="text" id="name" name="name" autoComplete="off"
                        onChange={(e) => {setPlayerName(e.target.value); setSelected(true);}} />
             </form>
+            <button disabled={!selected} className="btn btn-warning" onClick={advance}>Start your life!</button>
         </div>
     )
 }
 
 type SetupScreenProps = {
+    advance: () => void,
     playerIdx: number,
     setPlayerIdx: (idx: number) => void,
-    setPlayerName: (name: string) => void,
-    advance: () => void
+    setPlayerName: (name: string) => void
 }
 const SetupScreen: React.FC<SetupScreenProps> = ({
+    advance,
     playerIdx,
     setPlayerIdx,
-    setPlayerName,
-    advance
+    setPlayerName
 }) => {
-    const [stage, setStage] = useState<Stage>(Stage.CHARACTER);
-    const [selected, setSelected] = useState<boolean>(false);
-
     return (
         <div className="container text-center my-3" id="setup">
-            <CharacterSelect playerIdx={playerIdx} setPlayerIdx={setPlayerIdx} setStage={(stage) => setStage(stage)} />
-            { stage === Stage.NAME && <NameSelect setPlayerName={setPlayerName} setSelected={(selected) => setSelected(selected)} /> }
-            { selected && <button className="btn btn-warning" onClick={advance}>Start your life!</button>}
+            <CharacterSelect playerIdx={playerIdx} setPlayerIdx={setPlayerIdx} />
+            <NameSelect setPlayerName={setPlayerName} advance={advance} />
         </div>
     );
 }

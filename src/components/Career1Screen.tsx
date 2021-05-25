@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {career} from "../App";
+import {Career} from "../App";
 
 
 type Career1ScreenProps = {
