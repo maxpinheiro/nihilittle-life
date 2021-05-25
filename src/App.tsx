@@ -21,7 +21,7 @@ export type Career =
     | 'biology' | 'physics' | 'chemistry' | 'engineering' | 'pharmacology'
     | 'creative writing' | 'journalism' | 'poetry' | 'magazine editing';
 
-
+export const personalities: Personality[] = ['athlete', 'artist', 'programmer', 'politician', 'scientist', 'writer'];
 const INIT_SCORES: PersonalityScores = {
   athlete: 0,
   artist: 0,
@@ -50,7 +50,7 @@ export default class App extends React.Component<any, State> {
       personality: null,
       pet: -1,
       career: null
-    }
+    };
 
     this.getScene = this.getScene.bind(this);
     this.setScene = this.setScene.bind(this);
@@ -62,9 +62,11 @@ export default class App extends React.Component<any, State> {
     this.setCareer = this.setCareer.bind(this);
   }
 
+  stateString(): string { return `Stage ${this.state.gameStage} | Playing as ${this.state.player.name}, age ${this.state.player.name} | Scores: ${personalities.map((key, idx) => `${key}: ${this.state.personalityScore[key]}${idx < personalities.length && ', '}`)}`}
+
   componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<State>, snapshot?: any) {
     // print state beginning of every stage
-    if (prevState.gameStage !== this.state.gameStage) console.log(this.state);
+    if (prevState.gameStage !== this.state.gameStage) console.log(this.stateString());
   }
 
   render() {

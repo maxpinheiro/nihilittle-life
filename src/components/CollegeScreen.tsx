@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import { Personality, PersonalityScores, Career } from "../App";
-
-const personalities: Personality[] = ['athlete', 'artist', 'programmer', 'politician', 'scientist', 'writer'];
+import { personalities, Personality, PersonalityScores, Career } from "../App";
 
 enum Stage {APPLY, COMMIT, CONCENTRATION};
 
