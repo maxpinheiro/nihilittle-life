@@ -107,7 +107,7 @@
       },
       "artist": {
         "true": ["graphic design", "fine arts", "art history"],
-        "false": ["public art", "graphic design", "fine arts"]
+        "false": ["public art", "graphic design", "fine arts", "glass blowing"]
       },
       "programmer": {
         "true": ["cyber security", "artificial intelligence", "web development", "software engineering"],

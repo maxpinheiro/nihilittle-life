@@ -15,7 +15,7 @@ export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | '
 export type PersonalityScores = {[type in Personality]: number};
 export type Career =
     | 'professional athleticism' | 'physical therapy' | 'athletic training' | 'coaching' | 'personal training'
-    | 'graphic design' | 'fine arts' | 'art history' | 'public art'
+    | 'graphic design' | 'fine arts' | 'art history' | 'public art' | 'glass blowing'
     | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering' | 'I.T.' | 'hacking'
     | 'social justice' | 'political theory' | 'international relations' | 'city council' | 'charity administration'
     | 'biology' | 'physics' | 'electrical work' | 'chemistry' | 'engineering' | 'pharmacology' | 'drug production'
