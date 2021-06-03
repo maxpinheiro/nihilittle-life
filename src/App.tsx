@@ -1,13 +1,12 @@
 import React from 'react';
-import './App.css';
 import Decisions from "./decisions.json";
 
 import IntroScreen from "./components/IntroScreen";
-import SetupScreen from "./components/SetupScreen";
-import GradeSchoolScreen from "./components/GradeSchoolScreen";
-import HighSchoolScreen from "./components/HighSchoolScreen";
-import CollegeScreen from "./components/CollegeScreen";
-import Career1Screen from "./components/Career1Screen";
+import SetupScreen from "./components/Setup/SetupScreen";
+import GradeSchoolScreen from "./components/GradeSchool/GradeSchoolScreen";
+import HighSchoolScreen from "./components/HighSchool/HighSchoolScreen";
+import CollegeScreen from "./components/College/CollegeScreen";
+import Career1Screen from "./components/Career1/Career1Screen";
 
 enum stage { INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER1, LOVE, CAREER2, RETIREMENT, END_SCENE};
 type Age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
