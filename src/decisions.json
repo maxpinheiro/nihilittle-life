@@ -103,7 +103,7 @@
     "careers": {
       "athlete": {
         "true": ["professional athleticism", "physical therapy", "athletic training"],
-        "false": ["coaching", "personal training"]
+        "false": ["coaching", "personal training", "sports officiating"]
       },
       "artist": {
         "true": ["graphic design", "fine arts", "art history"],
@@ -115,7 +115,7 @@
       },
       "politician": {
         "true": ["social justice", "political theory", "international relations"],
-        "false": ["city council", "charity administration"]
+        "false": ["city council", "charity administration", "motivational speaking"]
       },
       "scientist": {
         "true": ["biology", "physics", "chemistry", "engineering"],
@@ -123,8 +123,41 @@
       },
       "writer": {
         "true": ["creative writing", "journalism", "poetry"],
-        "false": ["magazine editing", "copywriting"]
+        "false": ["magazine editing", "copywriting", "creative writing", "poetry"]
       }
+    }
+  },
+
+  "CAREER1" : {
+    "professional athleticism": {
+      "prompt" : "You have been drafted by the Boston Boneheads! How do you raise team moral and make new friends?",
+      "options" : ["a team handshake", "sharing intimate and genuine moments of friendship", "snacks"]
+    },
+    "physical therapy": {
+      "prompt" : "You have a new patient as a physical therapist: a young man who has been injured while sking and tiktoking simultaneously.\n What is your first method of treatment.",
+      "options" : ["cryotherapy", "massage and exercise", "elbow grease"]
+    },
+    "athletic training": {
+      "prompt" : "You have been hired to train B-Rod! \n Which of his problem areas do you pick to work on first",
+      "options" : ["his shameful calves", "his hairline muscles", "his flabby lobes"]
+    },
+    "coaching": {
+      "prompt" : "You have been hired to coach an elite high school baseball team! \n They have suffered a crushing blow losing to a little league team, how do you coach them back to greatness?",
+      "options" : ["training montage", "new outfits!", ""]
+    },
+    "personal training": {
+      "prompt" : "You have been hired to train Cicholas Nage for an upcoming role! \n Which of his problem areas do you pick to work on first",
+      "options" : ["his shameful calves", "his hairline muscles", "his flabby lobes"]
+    },
+    "sports officiating": {
+      "prompt" : "You are officiating your first soccer game. One player taps the other on the shoulder, the tapped player collapses to the ground, what's your call?",
+      "options" : ["foul!", "look the other way", "make them hug it out"]
+    },
+
+
+    "poetry": {
+      "prompt" : "What would you choose to rhyme with stack",
+      "options" : ["hell and back", "you look like a snack", "my heart grows ashen and black"]
     }
   }
 }

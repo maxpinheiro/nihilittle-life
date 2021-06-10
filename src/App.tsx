@@ -16,9 +16,9 @@ export type Career =
     | 'professional athleticism' | 'physical therapy' | 'athletic training' | 'coaching' | 'personal training'
     | 'graphic design' | 'fine arts' | 'art history' | 'public art' | 'glass blowing'
     | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering' | 'I.T.' | 'hacking'
-    | 'social justice' | 'political theory' | 'international relations' | 'city council' | 'charity administration'
+    | 'social justice' | 'political theory' | 'international relations' | 'city council' | 'charity administration' | 'motivational speaking'
     | 'biology' | 'physics' | 'electrical work' | 'chemistry' | 'engineering' | 'pharmacology' | 'drug production'
-    | 'creative writing' | 'journalism' | 'poetry' | 'magazine editing' | 'copywriting';
+    | 'creative writing' | 'journalism' | 'poetry' | 'magazine editing' | 'copywriting' | 'sports officiating';
 
 export const personalities: Personality[] = ['athlete', 'artist', 'programmer', 'politician', 'scientist', 'writer'];
 const INIT_SCORES: PersonalityScores = {
@@ -98,7 +98,8 @@ export default class App extends React.Component<any, State> {
                                   // @ts-ignore
                                   decisions={Decisions["HIGH_SCHOOL"]} />
       case stage.COLLEGE:
-        return <CollegeScreen advance={() => this.setScene(stage.CAREER1)}
+        return <CollegeScreen name={this.state.player.name}
+                              advance={() => this.setScene(stage.CAREER1)}
                               personality={this.state.personality}
                               setPersonality={this.setPersonality}
                               setCareer={this.setCareer}
