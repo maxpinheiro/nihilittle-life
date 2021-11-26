@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { personalities, Personality, PersonalityScores, Career } from "../../App";
+import { Personality, PersonalityScores } from "../../App";
+import { Career } from '../../CAREERS';
 import Application from "./Application";
 import Commitment from "./Commitment";
 import Passion from "./Passion";
@@ -22,10 +23,12 @@ type CollegeScreenProps = {
     setPersonality: (personality: Personality) => void,
     setCareer: (career: Career) => void,
     scores: PersonalityScores,
-    decision: {
+    collegeDecision: {
         names: {[personality in Personality]: string},
-        careers: {[personality in Personality]: {true: Career[], false: Career[]}}
     },
+    careerDecision : {
+        careers: {[personality in Personality]: {true: Career[], false: Career[]}},
+    }
 }
 
 const CollegeScreen: React.FC<CollegeScreenProps> = ({
@@ -35,7 +38,8 @@ const CollegeScreen: React.FC<CollegeScreenProps> = ({
     setPersonality,
     setCareer,
     scores,
-    decision: {names, careers}
+    collegeDecision: {names},
+    careerDecision: {careers}
 }) => {
     const [stage, setStage] = useState<Stage>(Stage.APPLY);
     const [acceptedSchools, setAcceptedSchools] = useState<Personality[]>([]);

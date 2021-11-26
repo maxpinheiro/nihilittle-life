@@ -1,4 +1,6 @@
-{
+import { Career } from "./CAREERS";
+
+export default {
   "GRADE_SCHOOL": {
     "points": 3,
     "prompt": "Choose what to do during recess:",
@@ -99,63 +101,63 @@
       "politician": "Minaj School of Political Science",
       "scientist": "Nye College of Science",
       "writer": "Fitzgerald School of Literary Arts"
-    },
-    "careers": {
-      "athlete": {
-        "true": ["professional athleticism", "physical therapy", "athletic training"],
-        "false": ["coaching", "personal training", "sports officiating"]
-      },
-      "artist": {
-        "true": ["graphic design", "fine arts", "art history"],
-        "false": ["public art", "graphic design", "fine arts", "glass blowing"]
-      },
-      "programmer": {
-        "true": ["cyber security", "artificial intelligence", "web development", "software engineering"],
-        "false": ["web development", "I.T.", "hacking"]
-      },
-      "politician": {
-        "true": ["social justice", "political theory", "international relations"],
-        "false": ["city council", "charity administration", "motivational speaking"]
-      },
-      "scientist": {
-        "true": ["biology", "physics", "chemistry", "engineering"],
-        "false": ["pharmacology", "drug production", "electrical work"]
-      },
-      "writer": {
-        "true": ["creative writing", "journalism", "poetry"],
-        "false": ["magazine editing", "copywriting", "creative writing", "poetry"]
-      }
     }
+  },
+  "CAREER_CONCENTRATIONS": {
+    "careers" : {
+    "athlete": {
+      "true": [Career.PROFESSIONAL_ATHLETICISM, Career.PHYSICAL_THERAPY, Career.ATHLETIC_TRAINING],
+      "false": [Career.COACHING, Career.PERSONAL_TRAINING, Career.SPORTS_OFFICATING]
+    },
+    "artist": {
+      "true": [Career.GRAPHIC_DESIGN, Career.FINE_ARTS, Career.ART_HISTORY],
+      "false": [Career.PUBLIC_ART, Career.GRAPHIC_DESIGN, Career.FINE_ARTS, Career.GLASS_BLOWING]
+    },
+    "programmer": {
+      "true": [Career.CYBERSECURITY, Career.ARTIFICIAL_INTELLIGENCE, Career.WEB_DEV, Career.SWE],
+      "false": [Career.WEB_DEV, Career.IT, Career.HACKER]
+    },
+    "politician": {
+      "true": [Career.SOCIAL_JUSTICE, Career.POLITICAL_THEORY, Career.INTERNATIONAL_RELATIONS],
+      "false": [Career.CITY_COUNCIL, Career.CHARITY_ADMISTRATION, Career.MOTIVATION_SPEAKING]
+    },
+    "scientist": {
+      "true": [Career.BIOLOGY, Career.PHYSICS, Career.CHEMISTRY, Career.ENGINEER],
+      "false": [Career.PHARMA, Career.DRUG_PRODUCER, Career.ELECTRICAL_WORK]
+    },
+    "writer": {
+      "true": [Career.CREATIVE_WRITING, Career.JOURNALISM, Career.POETRY],
+      "false": [Career.EDITOR, Career.COPY_WRITER, Career.CREATIVE_WRITING, Career.POETRY]
+    }
+  }
   },
 
   "CAREER1" : {
-    "professional athleticism": {
+     [Career.PROFESSIONAL_ATHLETICISM] : {
       "prompt" : "You have been drafted by the Boston Boneheads! How do you raise team moral and make new friends?",
       "options" : ["a team handshake", "sharing intimate and genuine moments of friendship", "snacks"]
     },
-    "physical therapy": {
+    [Career.PHYSICAL_THERAPY]: {
       "prompt" : "You have a new patient as a physical therapist: a young man who has been injured while sking and tiktoking simultaneously.\n What is your first method of treatment.",
       "options" : ["cryotherapy", "massage and exercise", "elbow grease"]
     },
-    "athletic training": {
+    [Career.ATHLETIC_TRAINING]: {
       "prompt" : "You have been hired to train B-Rod! \n Which of his problem areas do you pick to work on first",
       "options" : ["his shameful calves", "his hairline muscles", "his flabby lobes"]
     },
-    "coaching": {
+    [Career.COACHING]: {
       "prompt" : "You have been hired to coach an elite high school baseball team! \n They have suffered a crushing blow losing to a little league team, how do you coach them back to greatness?",
       "options" : ["training montage", "new outfits!", ""]
     },
-    "personal training": {
+    [Career.PERSONAL_TRAINING]: {
       "prompt" : "You have been hired to train Cicholas Nage for an upcoming role! \n Which of his problem areas do you pick to work on first",
       "options" : ["his shameful calves", "his hairline muscles", "his flabby lobes"]
     },
-    "sports officiating": {
+    [Career.SPORTS_OFFICATING]: {
       "prompt" : "You are officiating your first soccer game. One player taps the other on the shoulder, the tapped player collapses to the ground, what's your call?",
       "options" : ["foul!", "look the other way", "make them hug it out"]
     },
-
-
-    "poetry": {
+    [Career.POETRY]: {
       "prompt" : "What would you choose to rhyme with stack",
       "options" : ["hell and back", "you look like a snack", "my heart grows ashen and black"]
     }

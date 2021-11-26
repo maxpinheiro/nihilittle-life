@@ -1,6 +1,7 @@
 import React from 'react';
-import Decisions from "./decisions.json";
+import Decisions from "./decisions";
 
+import { Career } from "./CAREERS"
 import IntroScreen from "./components/IntroScreen";
 import SetupScreen from "./components/Setup/SetupScreen";
 import GradeSchoolScreen from "./components/GradeSchool/GradeSchoolScreen";
@@ -12,13 +13,7 @@ enum stage { INTRO, SETUP, GRADE_SCHOOL, HIGH_SCHOOL, COLLEGE, CAREER1, LOVE, CA
 type Age = 'child' | 'adolescent' | 'young_adult' | 'adult' | 'old';
 export type Personality = 'athlete' | 'artist' | 'programmer' | 'politician' | 'scientist' | 'writer';
 export type PersonalityScores = {[type in Personality]: number};
-export type Career =
-    | 'professional athleticism' | 'physical therapy' | 'athletic training' | 'coaching' | 'personal training'
-    | 'graphic design' | 'fine arts' | 'art history' | 'public art' | 'glass blowing'
-    | 'cybersecurity' | 'artificial intelligence' | 'web development' | 'software engineering' | 'I.T.' | 'hacking'
-    | 'social justice' | 'political theory' | 'international relations' | 'city council' | 'charity administration' | 'motivational speaking'
-    | 'biology' | 'physics' | 'electrical work' | 'chemistry' | 'engineering' | 'pharmacology' | 'drug production'
-    | 'creative writing' | 'journalism' | 'poetry' | 'magazine editing' | 'copywriting' | 'sports officiating';
+
 
 export const personalities: Personality[] = ['athlete', 'artist', 'programmer', 'politician', 'scientist', 'writer'];
 const INIT_SCORES: PersonalityScores = {
@@ -105,7 +100,8 @@ export default class App extends React.Component<any, State> {
                               setCareer={this.setCareer}
                               scores={this.state.personalityScore}
                               // @ts-ignore
-                              decision={Decisions["COLLEGE"]}/>
+                              collegeDecision={Decisions["COLLEGE"]}
+                              careerDecision={Decisions["CAREER_CONCENTRATIONS"]}/>
       case stage.CAREER1:
         return <Career1Screen advance={() => this.setScene(stage.LOVE)} />
       default:
